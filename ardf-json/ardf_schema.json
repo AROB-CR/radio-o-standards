@@ -304,6 +304,14 @@
                   "pattern": "^-?\\d{1,3}:[0-5]\\d$",
                   "description": "Competitor's relative start time from start 0, in mmm:ss"
                 },
+                "team_id": {
+                  "type": "integer",
+                  "description": "Id of the team that the competitors runs in."
+                },
+                "leg": {
+                  "type": "integer",
+                  "description": "Number of the team's leg that the competitors runs in."
+                },
                 "result": {
                   "type": "object",
                   "description": "Competitor's result",
@@ -402,6 +410,70 @@
                           }
                         }
                       }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "teams": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "One team in a race (used for e.g. relay race).",
+              "properties": {
+                "team_id": {
+                  "type": "integer",
+                  "description": "Unique team number in a race. Used to pair competitors into teams."
+                },
+                "name": {
+                  "type": "string",
+                  "description": "Name of the team, such as ASP 1. Needs to be unique in between the teams of the same category."
+                },
+                "category": {
+                  "type": "string",
+                  "description": "Name of the category that the team competes in."
+                },
+                "result": {
+                  "type": "object",
+                  "description": "Team's result - does not contain the individual punches (these are saved in competitor's section).",
+                  "required": [
+                    "result_status"
+                  ],
+                  "properties": {
+                    "run_time": {
+                      "type": "string",
+                      "pattern": "^\\d{1,3}:[0-5]\\d$",
+                      "description": "Run time of the team, in the form of mmm:ss"
+                    },
+                    "result_status": {
+                      "type": "string",
+                      "enum": [
+                        "OK",
+                        "MP",
+                        "DNS",
+                        "DNF",
+                        "NR",
+                        "DSQ",
+                        "OVT",
+                        "UNF",
+                        "ERR"
+                      ],
+                      "description": "Status of the result: OK - valid, MP - misspunched, DNS - did not start, DNF - did not finish, NR - no ranking, DSQ - disqualified, OVT - overtime, OVT - overtime, UNF - unofficial, ERR - error"
+                    },
+                    "place": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "description": "Place of the competitor: 0 - not placed (misspunch, disq). 1... - valid place"
+                    },
+                    "modified": {
+                      "type": "boolean",
+                      "description": "Marks if the readout was modified - e.g referee's decision"
+                    },
+                    "punch_count": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "description": "Number of control points found"
                     }
                   }
                 }
