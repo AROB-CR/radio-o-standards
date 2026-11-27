@@ -126,6 +126,11 @@
                   "type": "boolean",
                   "description": "true - man, false - woman"
                 },
+                "category_open": {
+                  "type": "boolean",
+                  "default": false,
+                  "description": "When true, the category is open to competitors of any gender. The required category_gender value is ignored for category eligibility. When false or absent, category_gender applies."
+                },
                 "category_max_age": {
                   "type": "integer",
                   "minimum": 0,
